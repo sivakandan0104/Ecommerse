@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'new.css' %}">
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>   
+    <title>E-Commerce Website</title>
+</head>
+<body>
+    <header style="display: flex; justify-content: space-between; align-items: center; padding: 20px;">
+        <h1 style="margin: 0;">E-Commerce Store</h1>
+        <div>
+            <p style="display: inline; margin-right: 15px;">{{ n }}</p>
+            <a href="{% url 'cart' %}" style="margin-right: 15px; text-decoration: none; color: #007bff;">Cart</a>
+            <a href="{% url 'logout' %}" style="text-decoration: none; color: #007bff;">Logout</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="products">
+            {% for d in detail %}
+            <!-- Product 1 -->
+            <div class="product">
+                <img src="https://via.placeholder.com/200" alt="Product 1">
+                <h3>{{d.name}}</h3>
+                <p>{{d.price}}</p>
+                <button class="add-to-cart" data-product-id="{{d.id}}">Add to Cart</button>
+            </div>
+            {% endfor %}
+        </section>
+
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}"> 
+    </main>
+
+    <footer>
+        <p>&copy; 2025 E-Commerce Store. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function () {
+
+                const productId = this.getAttribute('data-product-id');  
+
+                const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+                fetch('/add-to-cart/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken,  
+                    },
+                    body: JSON.stringify({
+                        product_id: productId,
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        alert(data.message);  
+                    } else if (data.error) {
+                        alert(data.error);  
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);  
+                });
+            });
+        });
+    </script>
+</body>
+</html>

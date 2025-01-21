@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'purchase.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="middle">
+        <h4 class="purchase-header">Purchase</h4><hr>
+        <div class="inside-middle">
+            {% for itm in item %}
+                <div class="item-row">
+                    <span class="product-name">{{ itm.product_name }} [{{ itm.quantity }}]</span>
+                    <span class="price">₹{{ itm.price }}</span>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="total-row">
+            <span class="total-label">Total</span>
+            <span class="total-amount">₹{{ total_amount }}</span>
+        </div>
+        <hr>
+        <div class="purchase-button">
+            <button id="pay-btn" style="width: 100%; padding: 10px; font-size: 16px; background-color: #007bff; color: white; border: none; border-radius: 5px;">Proceed to Pay</button>
+        </div>
+    </div>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+    var options = {
+        key: "{{ razor_key_id }}", 
+        amount: "{{ amount }}", 
+        currency: "INR",
+        name: "Dj Razorpay", 
+        order_id: "{{ order_id }}", 
+        callback_url: "{{ callbackurl }}",
+    };
+
+    var rzp1 = new Razorpay(options);
+
+    document.getElementById("pay-btn").onclick = function (e) {
+        rzp1.open();
+        e.preventDefault();
+    };
+    </script>    
+</body>
+</html>

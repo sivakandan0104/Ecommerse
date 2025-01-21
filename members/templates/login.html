@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'linked.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="middle">
+        <h4 style="text-align: center">Login</h4>
+        <hr>
+        <div class="inside-middle">
+        <form method="POST" action="">
+            {% csrf_token %}
+            <label>Email:</label><br>
+            <input type="text" name="email" id="in"><br><br>
+            <label>Password:</label><br>
+            <input type="password" name="password" id="in"><br><br>
+            <input type="submit" name="submit" value='Login' class="submit-btn">
+        </form>
+    </div><hr>
+    <p style="margin-left:5%">
+        New account? <a href="{% url 'forms' %}" id="its">Register!</a> | 
+        <a href="{% url 'forgot' %}" id="its">Forgot password!</a>
+    </p>
+    
+    </div>
+    {% if message %}
+    <script>alert('{{message}}')</script>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<link rel="stylesheet" href="{% static 'linked.css' %}">-->
+    <script src="{% static 'cart.js' %}" defer></script> <!-- Link to external JS -->
+    <title>Document</title>
+    <style>
+        .table-container {
+            width: 100%;
+            max-width: 80%;
+            margin: 2% auto;
+        }
+        table {
+            width: 100%;
+            border: 1px solid black;
+            border-collapse: collapse;
+            table-layout: fixed; /* Use fixed layout to control column widths */
+        }
+        th, td {
+            border: 1px solid black;
+            text-align: center;
+            padding: 10px 20px;
+        }
+        th:nth-child(1), td:nth-child(1) {
+            width: 10%; /* Set width for the Id column */
+        }
+        th:nth-child(2), td:nth-child(2) {
+            width: 40%; /* Set width for the Product Name column */
+        }
+        th:nth-child(3), td:nth-child(3) {
+            width: 20%; /* Set width for the Quantity column */
+        }
+        th:nth-child(4), td:nth-child(4) {
+            width: 20%; /* Set width for the Price column */
+        }
+        th:nth-child(5), td:nth-child(5) {
+            width: 10%; /* Set width for the Remove column */
+        }
+        .purchase-button {
+            display: inline-block;
+            text-align: center;
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+        .purchase-button:hover {
+            background-color: #218838;
+        }
+        .purchase-button-container {
+            text-align: right;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="table-container">
+            <table>
+                <caption><h3>Cart Items</h3></caption>
+                <tr>
+                    <th>Id</th>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Remove</th>
+                </tr>
+                {% if task %}
+                    {% for t in task %}
+                        <tr id="row-{{ t.product_name }}">
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ t.product_name }}</td>
+                            <td>
+                                <button class="decrease-quantity" data-name="{{ t.product_name }}">-</button>
+                                <span id="quantity-{{ t.product_name }}">{{ t.quantity }}</span>
+                                <button class="increase-quantity" data-name="{{ t.product_name }}">+</button>
+                            </td>
+                            <td id="price-{{ t.product_name }}">{{ t.price }}</td>
+                            <td>
+                                <button class="delete-row" data-name="{{ t.product_name }}">Delete</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5">Your cart is empty.</td>
+                    </tr>
+                {% endif %}
+            </table>
+            <div class="purchase-button-container">
+                <a href="{% url 'purchase' %}" class="purchase-button">Proceed to Purchase</a>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

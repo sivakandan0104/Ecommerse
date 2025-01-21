@@ -1,0 +1,56 @@
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+table {
+    margin-left: 20%;
+    margin-top: 2%;
+}
+td, th {
+    text-align: center;
+    padding: 10px 20px;
+}
+.button-container {
+    margin-top: 20px;
+    margin-left: 20%;
+    display: flex;
+}
+.button-container button a {
+    text-decoration: none;
+    color: black;
+    display: block;
+    text-align: center;
+    padding: 5px;
+}
+#one{
+    margin-left:9%;
+}
+.middle {
+    margin-left: 35%;
+    margin-top: 5%;
+    border: 1px solid black;
+    width: 20%;
+}
+.inside-middle {
+    margin-left: 10%;
+    margin-top: 7%;
+    margin-bottom: 7%;
+}
+#in {
+    width: 80%;
+    padding: 10px;
+}
+a.link {
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 5px;
+    color: black;
+}
+.submit-btn {
+    width: 88%;
+    padding: 10px;
+}
+#its{
+    text-decoration: none;
+    color: blue;
+}
