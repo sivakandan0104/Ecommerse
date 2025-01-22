@@ -7,8 +7,8 @@ from .models import Register, Member, Mysqltable, Products, Cart, orders
 from django.contrib.auth.hashers import make_password, check_password
 from django.views.decorators.csrf import csrf_exempt
 
-RAZORPAY_KEY_ID = "rzp_test_VWmICmsgQhaxjk"
-RAZORPAY_KEY_SECRET = "8mnVhktk5mOO0RaxALnBKaJK"
+RAZORPAY_KEY_ID = "rzp_test_VWmICmsgQh"
+RAZORPAY_KEY_SECRET = "8mnVhktk5mOO0RaxALn"
 
 client = razorpay.Client(auth=(RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET))
 
